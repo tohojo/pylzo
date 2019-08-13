@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # lzo_test.py
@@ -62,6 +63,9 @@ def run_tests(filename, cmd):
 
 
 if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        sys.stderr.write(f"Usage: {sys.argv[0]} <test vector filename> <decompressor command>\n")
+        sys.exit(1)
     testfile = sys.argv[1]
     cmd = sys.argv[2]
     run_tests(testfile, cmd)
