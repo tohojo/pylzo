@@ -1,0 +1,14 @@
+* Pure Python LZO decompressor
+
+This is a pure Python implementation of a decompressor for the LZO format,
+implemented at a [[https://bornhack.dk/bornhack-2019/program/#/event/implementing-the-lzo-decompression-algorithm][workshop at Bornhack]].
+
+It's slow and verbose, so I won't recommend using it for anything critical, but
+it can be used for testing and studying.
+
+The implementation is in [[file:lzo_decomp.py]]; a test harness is in
+[[file:lzo_test.py]] which can be used with the test vectors in test*.hex to test
+this implementation, or anything else that reads compressed bytes from stdin and
+writes it to stdout.
+
+License: GPLv3.
