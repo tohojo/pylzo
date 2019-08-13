@@ -114,6 +114,8 @@ class LZODecompressor:
         while val == 0:
             length += 255
             val = self.read_1()
+            if length > 2**20:
+                raise LZOError("Too many zeroes")
 
         logger.debug("Counted zeroes to length %d", length + val)
         return length + val
