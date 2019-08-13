@@ -25,7 +25,9 @@ import shlex
 
 ret = 0
 
+
 def run_test(command, input, output):
+    global ret
     print(f"Trying input {input[:10]}...", end='')
     proc = subprocess.Popen(shlex.split(command),
                             stdin=subprocess.PIPE,
@@ -34,9 +36,12 @@ def run_test(command, input, output):
     out, err = proc.communicate(input=input)
 
     if proc.returncode != 0:
-        print(f"Got returncode {proc.returncode} for input {input.hex()}")
-        print(err.decode())
-        ret = 2
+        if output:
+            print(f"Got returncode {proc.returncode} for input {input.hex()}")
+            print(err.decode())
+            ret = 2
+        else:
+            print("OK (Expected crash)")
     elif output != out:
         print(f"Got {out} expected {output}")
         ret = 1
@@ -49,8 +54,11 @@ def run_tests(filename, cmd):
         lines = fp.readlines()
 
     for l in lines:
-        input, output = l.split(":")
-        run_test(cmd, bytes.fromhex(input), bytes.fromhex(output))
+        try:
+            input, output = l.split(":")
+            run_test(cmd, bytes.fromhex(input), bytes.fromhex(output))
+        except:
+            pass
 
 
 if __name__ == "__main__":
